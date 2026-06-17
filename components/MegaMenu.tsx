@@ -6,7 +6,9 @@ import {
   ChevronRight,
   Phone,
   MapPin,
-  Clock
+  Clock,
+  Menu,
+  X
 } from "lucide-react";
 
 // Mock Data structure for the navigation dropdowns
@@ -327,8 +329,18 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
   const [activeNavIndex, setActiveNavIndex] = useState<number>(0);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
 
+  // Mobile menu states
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [expandedNavIndex, setExpandedNavIndex] = useState<number | null>(null);
+  const [expandedCategoryIndex, setExpandedCategoryIndex] = useState<number | null>(null);
+
+  const handleMobileSelectDevice = (deviceName: string) => {
+    onSelectDevice(deviceName);
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <div className="w-full bg-slate-50">
+    <div className="w-full bg-slate-50 relative">
       
       {/* Top Header Contact Bar */}
       <div className="w-full bg-slate-100 border-b border-slate-200 py-1.5 px-6 text-xs text-slate-500 font-medium">
@@ -356,14 +368,17 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
       {/* Main Navigation Menu Bar */}
       <nav className="w-full bg-white border-b border-slate-100 shadow-sm relative z-50">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="h-16 flex items-center justify-start gap-10">
+          <div className="h-16 flex items-center justify-between lg:justify-start gap-10">
             {/* Logo */}
-            <div className="flex items-center cursor-pointer mr-4" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-              <img src="./amanet.png" alt="Logo"  width={140} height={100}/>
+            <div className="flex items-center cursor-pointer mr-4" onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setIsMobileMenuOpen(false);
+            }}>
+              <img src="./amanet.png" alt="Logo" width={140} height={100}/>
             </div>
 
-            {/* Navigation links */}
-            <div className="flex items-center gap-8 h-full">
+            {/* Navigation links (Desktop) */}
+            <div className="hidden lg:flex items-center gap-8 h-full">
               {NAV_ITEMS.map((item, index) => {
                 return (
                   <div
@@ -448,8 +463,136 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                 );
               })}
             </div>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2.5 text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition duration-200 focus:outline-none ml-auto"
+              aria-label="Toggle Navigation"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown Accordion Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-2xl z-40 max-h-[calc(100vh-80px)] overflow-y-auto transition-all duration-300">
+            <div className="px-6 py-5 space-y-5">
+              
+              {/* Navigation Items Accordion */}
+              <div className="space-y-1">
+                {NAV_ITEMS.map((item, index) => {
+                  const isNavExpanded = expandedNavIndex === index;
+                  
+                  return (
+                    <div key={index} className="border-b border-slate-100 last:border-0 pb-3 last:pb-0 pt-2 first:pt-0">
+                      {item.hasDropdown && item.categories ? (
+                        <div>
+                          {/* Main Nav Item Header */}
+                          <button
+                            onClick={() => {
+                              setExpandedNavIndex(isNavExpanded ? null : index);
+                              setExpandedCategoryIndex(null); // Reset Level 2 nested selection
+                            }}
+                            className={`w-full flex justify-between items-center py-2 text-left transition-colors ${
+                              isNavExpanded ? "text-blue-600" : "text-slate-800"
+                            }`}
+                          >
+                            <div className="flex flex-col">
+                              {item.subLabel && (
+                                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider leading-none">
+                                  {item.subLabel}
+                                </span>
+                              )}
+                              <span className="text-[16px] font-bold mt-0.5">
+                                {item.label}
+                              </span>
+                            </div>
+                            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                              isNavExpanded ? "rotate-180 text-blue-500" : ""
+                            }`} />
+                          </button>
+
+                          {/* Level 2: Categories (Sub-Accordion) */}
+                          {isNavExpanded && (
+                            <div className="pl-4 mt-2.5 space-y-2 border-l-2 border-slate-100 ml-1">
+                              {item.categories.map((category, catIdx) => {
+                                const isCatExpanded = expandedCategoryIndex === catIdx;
+                                return (
+                                  <div key={catIdx} className="space-y-1.5">
+                                    <button
+                                      onClick={() => {
+                                        setExpandedCategoryIndex(isCatExpanded ? null : catIdx);
+                                      }}
+                                      className={`w-full flex justify-between items-center py-1.5 text-left text-[14px] font-semibold transition-colors ${
+                                        isCatExpanded ? "text-blue-500" : "text-slate-700 hover:text-slate-900"
+                                      }`}
+                                    >
+                                      <span>{category.name}</span>
+                                      <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                                        isCatExpanded ? "rotate-180 text-blue-500" : ""
+                                      }`} />
+                                    </button>
+
+                                    {/* Level 3: Subcategories (Devices) */}
+                                    {isCatExpanded && (
+                                      <div className="pl-2 pr-1 py-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                        {category.subcategories.map((sub, subIdx) => (
+                                          <button
+                                            key={subIdx}
+                                            onClick={() => handleMobileSelectDevice(sub.name)}
+                                            className="text-left px-3 py-2 rounded-xl text-[13px] font-bold text-slate-600 bg-slate-50 hover:bg-blue-50/60 hover:text-blue-600 transition-all border border-slate-100"
+                                          >
+                                            {sub.name}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        /* Simple link item without dropdown */
+                        <a
+                          href={item.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block py-2 text-[16px] font-bold text-slate-700 hover:text-blue-600 transition-colors"
+                        >
+                          {item.label}
+                        </a>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Extra Mobile Contact Bar info nested inside mobile menu */}
+              <div className="pt-5 border-t border-slate-100 flex flex-col gap-3.5 text-slate-500 text-[13px] font-semibold">
+                <span className="flex items-center gap-2.5">
+                  <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
+                  Bakı şəhəri, Nizami küç. 142
+                </span>
+                <span className="flex items-center gap-2.5">
+                  <Clock className="w-4 h-4 text-blue-600 shrink-0" />
+                  Hər gün: 09:00 - 21:00
+                </span>
+                <a href="tel:+994501234567" className="flex items-center justify-center gap-2 font-bold text-white bg-blue-600 hover:bg-blue-500 p-3.5 rounded-2xl transition w-full shadow-md mt-2">
+                  <Phone className="w-4 h-4 text-white animate-pulse shrink-0" />
+                  +994 (50) 123-45-67
+                </a>
+              </div>
+              
+            </div>
+          </div>
+        )}
       </nav>
     </div>
   );

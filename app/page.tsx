@@ -651,6 +651,154 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Quality Parts Section */}
+      <section className="max-w-7xl mx-auto px-6 mt-12 md:mt-20 lg:mt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="lg:col-span-7 space-y-6 md:space-y-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#002855] tracking-tight text-center lg:text-left">
+              Keyfiyyətli hissələr
+            </h2>
+            <div className="space-y-5 md:space-y-6">
+              <div className="text-left">
+                <h3 className="text-base sm:text-lg font-bold text-slate-800">Orijinal sinif displeyləri</h3>
+                <p className="text-[13px] sm:text-sm text-slate-500 font-semibold mt-1 leading-relaxed">
+                  Orijinal zənginlik, görüntü keyfiyyəti, parlaqlıq, rəng göstərilməsi və toxunma həssaslığı
+                </p>
+              </div>
+              <div className="text-left">
+                <h3 className="text-base sm:text-lg font-bold text-slate-800">Batareyalar</h3>
+                <p className="text-[13px] sm:text-sm text-slate-500 font-semibold mt-1 leading-relaxed">
+                  1000-dən çox doldurma dövrü təmin edən istehsalçılardan. Hər bir batareya nominal tutumunu təmin etmək üçün əlavə sınaqdan keçirilir.
+                </p>
+              </div>
+              <div className="text-left">
+                <h3 className="text-base sm:text-lg font-bold text-slate-800">Qatarlar</h3>
+                <p className="text-[13px] sm:text-sm text-slate-500 font-semibold mt-1 leading-relaxed">
+                  Kabellərdəki elektron komponentlər (kameralar, şarj konnektorları, mikrofonlar) istehsalçı standartlarına tam uyğundur
+                </p>
+              </div>
+              <div className="text-left">
+                <h3 className="text-base sm:text-lg font-bold text-slate-800">Düymələr</h3>
+                <p className="text-[13px] sm:text-sm text-slate-500 font-semibold mt-1 leading-relaxed">
+                  Orijinal materiallardan hazırlanmış aşınmaya davamlı düymələr
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="relative w-full max-w-[440px] aspect-[4/3] rounded-[32px] overflow-hidden bg-[#004aad] flex items-center justify-center p-6 shadow-xl mx-auto lg:mx-0 lg:ml-auto">
+              <img 
+                src="/quality_parts.png" 
+                alt="Keyfiyyətli hissələr" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Banner Section */}
+      <section className="max-w-7xl mx-auto px-6 mt-12 md:mt-20 lg:mt-24">
+        <div className="border border-[#d5dbe4] rounded-[32px] p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6 lg:gap-8 bg-white shadow-sm">
+          <div className="space-y-3 text-left w-full lg:max-w-2xl">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-[#002855] leading-snug text-center lg:text-left">
+              Hər hansı bir sualınız varmı və ya təmir planlaşdırmaq istəyirsiniz?
+            </h3>
+            <div className="flex items-center justify-center lg:justify-start gap-2 text-slate-500 text-[13px] sm:text-sm font-semibold mt-2.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+              Biz onlaynıq, yazın və ya zəng edin
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto min-w-[280px] sm:min-w-[340px] justify-center">
+            <a
+              href="tel:+99450000000"
+              className="w-full bg-[#0fa958] hover:bg-[#0d954e] active:scale-98 text-white font-extrabold text-sm py-4 px-8 rounded-2xl flex items-center justify-center gap-2 shadow-lg transition-all"
+            >
+              <Phone className="w-4 h-4 fill-white" />
+              Zəng edin
+            </a>
+            <div className="flex gap-3 w-full">
+              <a
+                href="https://t.me/pedant_bot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-[#24a1de] hover:bg-[#2090c7] active:scale-98 text-white font-extrabold text-sm py-4 px-4 rounded-2xl flex items-center justify-center transition-all shadow-md"
+              >
+                <Send className="w-4 h-4 fill-white text-[#24a1de]" />
+              </a>
+              <a
+                href="https://vk.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-[#0077ff] hover:bg-[#006be5] active:scale-98 text-white font-extrabold text-sm py-4 px-4 rounded-2xl flex items-center justify-center transition-all shadow-md"
+              >
+                <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                  <path d="M15.687 12.186c-1.411-.861-1.189-.727 0-2.316 1.187-1.587 2.052-2.736 2.052-2.736s.22-.32.115-.494c-.104-.176-.411-.115-.411-.115h-3.415s-.254-.035-.443.084c-.183.116-.299.349-.299.349s-.54 1.444-1.261 2.67c-1.522 2.589-2.131 2.726-2.381 2.564-.58-.378-.436-1.517-.436-2.327 0-2.531.383-3.585-.749-3.858-.376-.091-.652-.15-1.615-.16-1.234-.012-2.28.006-2.871.295-.393.193-.697.622-.512.647.23.031.748.14.996.478.32.436.308 1.416.308 1.416s.184 2.979-.431 3.35c-.422.254-1.002-.265-2.247-2.613-.695-1.31-1.22-2.756-1.22-2.756s-.103-.252-.286-.388c-.223-.166-.536-.153-.536-.153H1.472s-.418-.012-.572.194c-.139.186-.011.569-.011.569s2.671 6.248 5.7 9.387c2.777 2.877 5.939 2.688 5.939 2.688h1.618s.488-.053.737-.32c.228-.244.22-.7.22-.7s-.031-2.17.977-2.487c.995-.312 2.277 1.83 2.585 2.296.347.525.795.694.795.694h3.415s1.025.074 1.199-.272c.162-.321-.132-.97-.132-.97s-1.895-3.04-2.83-4.175c-.71-.861-.83-.984 0-2.09z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Screen Protector Section */}
+      <section className="max-w-7xl mx-auto px-6 mt-12 md:mt-20 lg:mt-24">
+        <div className="w-full bg-[#004aad] rounded-[32px] overflow-hidden shadow-xl text-white pt-8 px-6 pb-0 sm:pt-10 sm:px-10 lg:pt-12 lg:px-16 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-8 relative">
+          <div className="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
+          
+          <div className="space-y-6 max-w-2xl relative z-10 pb-8 lg:pb-12 text-left w-full">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-center lg:text-left">
+              İnnovativ örtüklü ekran qorunması
+            </h2>
+            
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <Star className="w-5 h-5 text-amber-400 fill-amber-400 shrink-0 mt-0.5" />
+                <span className="text-[13px] sm:text-sm md:text-base font-semibold">Cihazınızı hər tərəfdən qoruyun</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Star className="w-5 h-5 text-amber-400 fill-amber-400 shrink-0 mt-0.5" />
+                <span className="text-[13px] sm:text-sm md:text-base font-semibold leading-relaxed">
+                  Minimal örtük qalınlığı cihazın ölçüsünü artırmır və ekran həssaslığını qoruyur. Film qalınlığı 0,16 mm, korpus/qoruyucu şüşə qalınlığı isə 0,30 mm-dir ki, bu da 2 qat fərqdir.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Star className="w-5 h-5 text-amber-400 fill-amber-400 shrink-0 mt-0.5" />
+                <span className="text-[13px] sm:text-sm md:text-base font-semibold">Özünü sağaldır - cızıqlar bir müddət sonra sağalır</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Star className="w-5 h-5 text-amber-400 fill-amber-400 shrink-0 mt-0.5" />
+                <span className="text-[13px] sm:text-sm md:text-base font-semibold">Tez-tez dəyişdirilməsini tələb etmir (1 hidrogel örtük = aşınma müddəti baxımından 3-5 stəkan)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Star className="w-5 h-5 text-amber-400 fill-amber-400 shrink-0 mt-0.5" />
+                <span className="text-[13px] sm:text-sm md:text-base font-semibold">Film hər bir xüsusi model üçün hazırlandığı üçün istənilən smartfon üçün uyğundur</span>
+              </li>
+            </ul>
+            
+            <div className="pt-2 text-center lg:text-left">
+              <a
+                href="#apply"
+                className="bg-amber-400 text-slate-900 hover:bg-amber-300 font-extrabold text-sm px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl active:scale-98 transition inline-block"
+              >
+                Daha çox oxu
+              </a>
+            </div>
+          </div>
+          
+          <div className="w-full lg:w-[35%] flex justify-center lg:justify-end items-end relative z-10 mt-4 lg:mt-0">
+            <div className="w-full max-w-[280px] lg:max-w-[320px] aspect-[3/4] flex items-end justify-center">
+              <img 
+                src="/screen_protector.png" 
+                alt="İnnovativ örtüklü ekran qorunması" 
+                className="w-full h-auto object-contain block align-bottom"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 7. Footer CTA card */}
       <section className="max-w-7xl mx-auto px-6 mt-16 md:mt-24 mb-16 md:mb-24">
         <div className="w-full bg-white border border-[#d5dbe4] rounded-[32px] p-8 md:py-10 md:px-16 flex flex-col md:flex-row items-center justify-between gap-6">
