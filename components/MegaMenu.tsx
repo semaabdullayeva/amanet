@@ -341,24 +341,24 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
 
   return (
     <div className="w-full bg-slate-50 relative">
-      
+
       {/* Top Header Contact Bar */}
       <div className="w-full bg-slate-100 border-b border-slate-200 py-1.5 px-6 text-xs text-slate-500 font-medium">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-blue-600" />
+              <MapPin className="w-3.5 h-3.5 text-[#034788]" />
               Bakı şəhəri, Nizami küç. 142
             </span>
             <span className="hidden md:inline text-slate-300">|</span>
             <span className="hidden md:flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-blue-600" />
+              <Clock className="w-3.5 h-3.5 text-[#034788]" />
               Hər gün: 09:00 - 21:00
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="tel:+994501234567" className="flex items-center gap-1.5 font-semibold text-slate-700 hover:text-blue-600 transition">
-              <Phone className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
+            <a href="tel:+994501234567" className="flex items-center gap-1.5 font-semibold text-slate-700 hover:text-[#034788] transition">
+              <Phone className="w-3.5 h-3.5 text-[#034788] animate-pulse" />
               +994 (50) 123-45-67
             </a>
           </div>
@@ -374,7 +374,7 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
               window.scrollTo({ top: 0, behavior: "smooth" });
               setIsMobileMenuOpen(false);
             }}>
-              <img src="./amanet.png" alt="Logo" width={140} height={100}/>
+              <img src="./amanet.png" alt="Logo" width={140} height={100} />
             </div>
 
             {/* Navigation links (Desktop) */}
@@ -391,18 +391,18 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                   >
                     {item.subLabel ? (
                       <div className="flex flex-col select-none">
-                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-none">
+                        <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider leading-none">
                           {item.subLabel}
                         </span>
-                        <span className="text-[14px] font-bold text-slate-800 flex items-center gap-1 mt-0.5 group-hover:text-blue-600 transition-colors">
+                        <span className="text-[14px] font-semibold text-slate-800 flex items-center gap-1 mt-0.5 group-hover:text-[#034788] transition-colors">
                           {item.label}
-                          <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" />
+                          <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-[#034788] transition-transform duration-200" />
                         </span>
                       </div>
                     ) : (
                       <a
                         href={item.href}
-                        className="text-[14px] font-bold text-slate-600 hover:text-blue-600 transition-colors py-2 flex items-center"
+                        className="text-[14px] font-semibold text-slate-600 hover:text-[#034788] transition-colors py-2 flex items-center"
                       >
                         {item.label}
                       </a>
@@ -412,7 +412,7 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                     {item.hasDropdown && item.categories && (
                       <div className="absolute top-full left-0 pt-2 opacity-0 translate-y-1 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
                         <div className="flex gap-2 items-start pointer-events-auto">
-                          
+
                           {/* Column 1: Categories list (Left Panel) */}
                           <div className="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-slate-100 p-2 py-3 w-64 transform transition-all duration-200">
                             <div className="space-y-0.5">
@@ -424,16 +424,14 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                                     onMouseEnter={() => {
                                       setActiveCategoryIndex(idx);
                                     }}
-                                    className={`w-full text-left px-4 py-2.5 rounded-xl text-[14px] font-semibold flex justify-between items-center transition-all ${
-                                      isActive
-                                        ? "bg-blue-50/70 text-blue-600"
+                                    className={`w-full text-left px-4 py-2.5 rounded-xl text-[14px] font-semibold flex justify-between items-center transition-all ${isActive
+                                        ? "bg-blue-50/70 text-[#034788]"
                                         : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
-                                    }`}
+                                      }`}
                                   >
                                     <span>{category.name}</span>
-                                    <ChevronRight className={`w-4 h-4 transition-transform ${
-                                      isActive ? "transform translate-x-0.5 text-blue-500" : "text-slate-300"
-                                    }`} />
+                                    <ChevronRight className={`w-4 h-4 transition-transform ${isActive ? "transform translate-x-0.5 text-blue-500" : "text-slate-300"
+                                      }`} />
                                   </button>
                                 );
                               })}
@@ -448,7 +446,7 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                                   <button
                                     key={idx}
                                     onClick={() => onSelectDevice(sub.name)}
-                                    className="w-full text-left px-3 py-1.5 rounded-lg text-[13px] font-medium text-slate-600 hover:bg-blue-50/40 hover:text-blue-600 transition-all"
+                                    className="w-full text-left px-3 py-1.5 rounded-lg text-[13px] font-medium text-slate-600 hover:bg-blue-50/40 hover:text-[#034788] transition-all"
                                   >
                                     {sub.name}
                                   </button>
@@ -467,7 +465,7 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2.5 text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition duration-200 focus:outline-none ml-auto"
+              className="lg:hidden p-2.5 text-slate-700 hover:text-[#034788] hover:bg-slate-50 rounded-xl transition duration-200 focus:outline-none ml-auto"
               aria-label="Toggle Navigation"
             >
               {isMobileMenuOpen ? (
@@ -483,12 +481,12 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-2xl z-40 max-h-[calc(100vh-80px)] overflow-y-auto transition-all duration-300">
             <div className="px-6 py-5 space-y-5">
-              
+
               {/* Navigation Items Accordion */}
               <div className="space-y-1">
                 {NAV_ITEMS.map((item, index) => {
                   const isNavExpanded = expandedNavIndex === index;
-                  
+
                   return (
                     <div key={index} className="border-b border-slate-100 last:border-0 pb-3 last:pb-0 pt-2 first:pt-0">
                       {item.hasDropdown && item.categories ? (
@@ -499,9 +497,8 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                               setExpandedNavIndex(isNavExpanded ? null : index);
                               setExpandedCategoryIndex(null); // Reset Level 2 nested selection
                             }}
-                            className={`w-full flex justify-between items-center py-2 text-left transition-colors ${
-                              isNavExpanded ? "text-blue-600" : "text-slate-800"
-                            }`}
+                            className={`w-full flex justify-between items-center py-2 text-left transition-colors ${isNavExpanded ? "text-[#034788]" : "text-slate-800"
+                              }`}
                           >
                             <div className="flex flex-col">
                               {item.subLabel && (
@@ -513,9 +510,8 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                                 {item.label}
                               </span>
                             </div>
-                            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
-                              isNavExpanded ? "rotate-180 text-blue-500" : ""
-                            }`} />
+                            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isNavExpanded ? "rotate-180 text-blue-500" : ""
+                              }`} />
                           </button>
 
                           {/* Level 2: Categories (Sub-Accordion) */}
@@ -529,14 +525,12 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                                       onClick={() => {
                                         setExpandedCategoryIndex(isCatExpanded ? null : catIdx);
                                       }}
-                                      className={`w-full flex justify-between items-center py-1.5 text-left text-[14px] font-semibold transition-colors ${
-                                        isCatExpanded ? "text-blue-500" : "text-slate-700 hover:text-slate-900"
-                                      }`}
+                                      className={`w-full flex justify-between items-center py-1.5 text-left text-[14px] font-semibold transition-colors ${isCatExpanded ? "text-blue-500" : "text-slate-700 hover:text-slate-900"
+                                        }`}
                                     >
                                       <span>{category.name}</span>
-                                      <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
-                                        isCatExpanded ? "rotate-180 text-blue-500" : ""
-                                      }`} />
+                                      <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${isCatExpanded ? "rotate-180 text-blue-500" : ""
+                                        }`} />
                                     </button>
 
                                     {/* Level 3: Subcategories (Devices) */}
@@ -546,7 +540,7 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                                           <button
                                             key={subIdx}
                                             onClick={() => handleMobileSelectDevice(sub.name)}
-                                            className="text-left px-3 py-2 rounded-xl text-[13px] font-bold text-slate-600 bg-slate-50 hover:bg-blue-50/60 hover:text-blue-600 transition-all border border-slate-100"
+                                            className="text-left px-3 py-2 rounded-xl text-[13px] font-bold text-slate-600 bg-slate-50 hover:bg-blue-50/60 hover:text-[#034788] transition-all border border-slate-100"
                                           >
                                             {sub.name}
                                           </button>
@@ -564,7 +558,7 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                         <a
                           href={item.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="block py-2 text-[16px] font-bold text-slate-700 hover:text-blue-600 transition-colors"
+                          className="block py-2 text-[16px] font-bold text-slate-700 hover:text-[#034788] transition-colors"
                         >
                           {item.label}
                         </a>
@@ -577,11 +571,11 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
               {/* Extra Mobile Contact Bar info nested inside mobile menu */}
               <div className="pt-5 border-t border-slate-100 flex flex-col gap-3.5 text-slate-500 text-[13px] font-semibold">
                 <span className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
+                  <MapPin className="w-4 h-4 text-[#034788] shrink-0" />
                   Bakı şəhəri, Nizami küç. 142
                 </span>
                 <span className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-blue-600 shrink-0" />
+                  <Clock className="w-4 h-4 text-[#034788] shrink-0" />
                   Hər gün: 09:00 - 21:00
                 </span>
                 <a href="tel:+994501234567" className="flex items-center justify-center gap-2 font-bold text-white bg-blue-600 hover:bg-blue-500 p-3.5 rounded-2xl transition w-full shadow-md mt-2">
@@ -589,7 +583,7 @@ export default function MegaMenu({ onSelectDevice }: MegaMenuProps) {
                   +994 (50) 123-45-67
                 </a>
               </div>
-              
+
             </div>
           </div>
         )}

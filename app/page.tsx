@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import MegaMenu from "@/components/MegaMenu";
+import Footer from "@/components/Footer";
 import {
   ChevronDown,
   ChevronRight,
@@ -198,7 +199,7 @@ const BRAND_GRIDS = [
     ]
   },
   {
-    img:"./xiaomi.jpg",
+    img: "./xiaomi.jpg",
     title: "Xiaomi təmiri",
     iconType: "xiaomi",
     subcategories: [
@@ -303,7 +304,7 @@ export default function Home() {
       <MegaMenu onSelectDevice={handleDeviceSelection} />
 
       {/* 2. Hero Calculator Banner */}
-      <main ref={heroRef} className="w-full bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 py-16 md:py-24 px-6 text-white relative overflow-hidden">
+      <main ref={heroRef} className="w-full bg-[#034788] py-16 md:py-24 px-6 text-white relative overflow-hidden">
         {/* Subtle grid pattern background overlay */}
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
 
@@ -314,8 +315,8 @@ export default function Home() {
 
           {/* Hero left content */}
           <div className="lg:col-span-7 space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight select-none">
-              <span className="text-amber-400 font-black tracking-wider drop-shadow-md">amanet</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight select-none">
+              <span className="text-amber-400 tracking-wider drop-shadow-md">amanet</span>
               <span className="text-white">— peşəkar</span> <br />
               şəhərli xidmət şəbəkəsi
             </h1>
@@ -347,8 +348,8 @@ export default function Home() {
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <div className="bg-white text-slate-800 w-full max-w-[420px] rounded-[32px] shadow-2xl p-8 border border-slate-100 transform transition-all">
 
-              <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight text-center mb-6">
-                Təmir qiymətini 1 dəqiqəyə <span className="text-blue-600">öyrənin</span>
+              <h2 className="text-2xl font-semibold text-slate-900 tracking-tight text-center mb-6">
+                Təmir qiymətini 1 dəqiqəyə <span className="text-[#034788]">öyrənin</span>
               </h2>
 
               <div className="space-y-4">
@@ -392,7 +393,7 @@ export default function Home() {
                                 setIsDeviceDropdownOpen(false);
                                 setDeviceSearch("");
                               }}
-                              className="w-full text-left px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-blue-600 rounded-lg transition-colors flex justify-between items-center"
+                              className="w-full text-left px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#034788] rounded-lg transition-colors flex justify-between items-center"
                             >
                               <span>{device.name}</span>
                               <span className="text-[10px] text-slate-400 font-bold uppercase">{device.category.split(" ")[0]}</span>
@@ -431,7 +432,7 @@ export default function Home() {
                               setIsCityDropdownOpen(false);
                             }}
                             className={`w-full text-left px-3 py-2.5 text-sm font-semibold rounded-lg transition-colors flex justify-between items-center ${selectedCity === city
-                              ? "bg-blue-50 text-blue-600"
+                              ? "bg-blue-50 text-[#034788]"
                               : "text-slate-700 hover:bg-slate-50"
                               }`}
                           >
@@ -468,7 +469,7 @@ export default function Home() {
 
       {/* 3. Team & Careers Banner */}
       <section className="max-w-7xl mx-auto px-6 mt-12 md:mt-16">
-        <div className="w-full bg-[#0050d8] rounded-[32px] overflow-hidden shadow-xl border border-blue-500/20 text-white relative p-8 md:py-12 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="w-full bg-[#034788] rounded-[32px] overflow-hidden shadow-xl border border-blue-500/20 text-white relative p-8 md:py-12 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-4 max-w-xl">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight">
               Komandamızın bir hissəsi olun
@@ -498,10 +499,10 @@ export default function Home() {
           {/* Card 1: 707 services */}
           <div className="bg-slate-50 border rounded-3xl p-6 flex items-center justify-between transition-all group">
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-black text-blue-600 block group-hover:scale-105 transform origin-left transition duration-200">707</span>
+              <span className="text-3xl md:text-4xl font-black text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">707</span>
               <span className="text-sm font-bold text-slate-500 block">Rusiyada xidmətlər</span>
             </div>
-            <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
+            <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-[#034788]">
               <Wrench className="w-10 h-10" />
             </div>
           </div>
@@ -509,10 +510,10 @@ export default function Home() {
           {/* Card 2: 2 Million+ annual repairs */}
           <div className="bg-slate-50 border rounded-3xl p-6 flex items-center justify-between transition-all group">
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-black text-blue-600 block group-hover:scale-105 transform origin-left transition duration-200">2 MİLYON +</span>
+              <span className="text-3xl md:text-4xl font-black text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">2 MİLYON +</span>
               <span className="text-sm font-bold text-slate-500 block">İllik təmirlər</span>
             </div>
-            <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
+            <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-[#034788]">
               <Award className="w-10 h-10" />
             </div>
           </div>
@@ -520,10 +521,10 @@ export default function Home() {
           {/* Card 3: 180 Cities */}
           <div className="bg-slate-50 border rounded-3xl p-6 flex items-center justify-between transition-all group">
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-black text-blue-600 block group-hover:scale-105 transform origin-left transition duration-200">180</span>
+              <span className="text-3xl md:text-4xl font-black text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">180</span>
               <span className="text-sm font-bold text-slate-500 block">Şəhərlər</span>
             </div>
-            <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
+            <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-[#034788]">
               <MapPin className="w-10 h-10" />
             </div>
           </div>
@@ -550,7 +551,7 @@ export default function Home() {
           <div className="bg-slate-50 border rounded-3xl p-6 flex flex-col justify-between transition-all group cursor-pointer">
             <h4 className="text-lg font-black text-slate-800 leading-tight">amanet.az françayzinq</h4>
             <div className="flex items-center justify-between mt-4">
-              <span className="text-xs font-bold text-blue-600 flex items-center gap-1 group-hover:text-blue-500">
+              <span className="text-xs font-bold text-[#034788] flex items-center gap-1 group-hover:text-blue-500">
                 Daha çox oxu <ChevronRight className="w-3.5 h-3.5" />
               </span>
               <ArrowUpRight className="w-5 h-5 text-slate-300 group-hover:text-blue-500 transition-colors" />
@@ -562,7 +563,7 @@ export default function Home() {
 
       {/* 5. Telegram pricing banner */}
       <section className="max-w-7xl mx-auto px-6 mt-16 md:mt-24">
-        <div className="w-full bg-[#1155cc] rounded-[32px] p-6 py-8 md:py-10 md:px-16 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl text-white">
+        <div className="w-full bg-[#034788] rounded-[32px] p-6 py-8 md:py-10 md:px-16 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl text-white">
           <div className="flex items-center gap-4">
             <div className="bg-white/10 p-3.5 rounded-2xl hidden md:inline">
               <Send className="w-8 h-8 text-amber-400" />
@@ -608,17 +609,17 @@ export default function Home() {
                 <div className="flex-1 space-y-4">
                   <button
                     onClick={() => handleDeviceSelection(brand.subcategories[0].name)}
-                    className="text-lg font-extrabold text-slate-900 hover:text-blue-600 flex items-center gap-1 group"
+                    className="text-lg font-extrabold text-slate-900 hover:text-[#034788] flex items-center gap-1 group"
                   >
                     {brand.title}
-                    <ChevronRight className="w-4.5 h-4.5 text-slate-300 group-hover:text-blue-600 transition-colors" />
+                    <ChevronRight className="w-4.5 h-4.5 text-slate-300 group-hover:text-[#034788] transition-colors" />
                   </button>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-2.5">
                     {brand.subcategories.map((sub, sIdx) => (
                       <button
                         key={sIdx}
                         onClick={() => handleDeviceSelection(sub.name)}
-                        className="text-left text-xs md:text-sm font-semibold text-blue-600 hover:text-blue-500 hover:underline transition-colors"
+                        className="text-left text-xs md:text-sm font-semibold text-[#034788] hover:text-blue-500 hover:underline transition-colors"
                       >
                         {sub.name}
                       </button>
@@ -639,7 +640,7 @@ export default function Home() {
                 onClick={() => handleDeviceSelection(card.mockDevice)}
                 className="bg-white border border-[#d5dbe4] rounded-2xl p-4 flex flex-col justify-between items-start h-36 hover:shadow-lg hover:border-blue-100 transition-all group cursor-pointer"
               >
-                <span className="text-[12px] md:text-[13px] font-black text-slate-800 group-hover:text-blue-600 transition-colors flex items-center gap-0.5">
+                <span className="text-[12px] md:text-[13px] font-black text-slate-800 group-hover:text-[#034788] transition-colors flex items-center gap-0.5">
                   {card.title} <ChevronRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 group-hover:translate-x-0.5 transition" />
                 </span>
                 <div className="self-end mt-2">
@@ -685,12 +686,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-          
+
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-[440px] aspect-[4/3] rounded-[32px] overflow-hidden bg-[#004aad] flex items-center justify-center p-6 shadow-xl mx-auto lg:mx-0 lg:ml-auto">
-              <img 
-                src="/quality_parts.png" 
-                alt="Keyfiyyətli hissələr" 
+            <div className="relative w-full max-w-[440px] aspect-[4/3] rounded-[32px] overflow-hidden bg-[#034788] flex items-center justify-center p-6 shadow-xl mx-auto lg:mx-0 lg:ml-auto">
+              <img
+                src="/quality_parts.png"
+                alt="Keyfiyyətli hissələr"
                 className="w-full h-full object-contain"
               />
             </div>
@@ -734,7 +735,7 @@ export default function Home() {
                 className="flex-1 bg-[#0077ff] hover:bg-[#006be5] active:scale-98 text-white font-extrabold text-sm py-4 px-4 rounded-2xl flex items-center justify-center transition-all shadow-md"
               >
                 <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
-                  <path d="M15.687 12.186c-1.411-.861-1.189-.727 0-2.316 1.187-1.587 2.052-2.736 2.052-2.736s.22-.32.115-.494c-.104-.176-.411-.115-.411-.115h-3.415s-.254-.035-.443.084c-.183.116-.299.349-.299.349s-.54 1.444-1.261 2.67c-1.522 2.589-2.131 2.726-2.381 2.564-.58-.378-.436-1.517-.436-2.327 0-2.531.383-3.585-.749-3.858-.376-.091-.652-.15-1.615-.16-1.234-.012-2.28.006-2.871.295-.393.193-.697.622-.512.647.23.031.748.14.996.478.32.436.308 1.416.308 1.416s.184 2.979-.431 3.35c-.422.254-1.002-.265-2.247-2.613-.695-1.31-1.22-2.756-1.22-2.756s-.103-.252-.286-.388c-.223-.166-.536-.153-.536-.153H1.472s-.418-.012-.572.194c-.139.186-.011.569-.011.569s2.671 6.248 5.7 9.387c2.777 2.877 5.939 2.688 5.939 2.688h1.618s.488-.053.737-.32c.228-.244.22-.7.22-.7s-.031-2.17.977-2.487c.995-.312 2.277 1.83 2.585 2.296.347.525.795.694.795.694h3.415s1.025.074 1.199-.272c.162-.321-.132-.97-.132-.97s-1.895-3.04-2.83-4.175c-.71-.861-.83-.984 0-2.09z"/>
+                  <path d="M15.687 12.186c-1.411-.861-1.189-.727 0-2.316 1.187-1.587 2.052-2.736 2.052-2.736s.22-.32.115-.494c-.104-.176-.411-.115-.411-.115h-3.415s-.254-.035-.443.084c-.183.116-.299.349-.299.349s-.54 1.444-1.261 2.67c-1.522 2.589-2.131 2.726-2.381 2.564-.58-.378-.436-1.517-.436-2.327 0-2.531.383-3.585-.749-3.858-.376-.091-.652-.15-1.615-.16-1.234-.012-2.28.006-2.871.295-.393.193-.697.622-.512.647.23.031.748.14.996.478.32.436.308 1.416.308 1.416s.184 2.979-.431 3.35c-.422.254-1.002-.265-2.247-2.613-.695-1.31-1.22-2.756-1.22-2.756s-.103-.252-.286-.388c-.223-.166-.536-.153-.536-.153H1.472s-.418-.012-.572.194c-.139.186-.011.569-.011.569s2.671 6.248 5.7 9.387c2.777 2.877 5.939 2.688 5.939 2.688h1.618s.488-.053.737-.32c.228-.244.22-.7.22-.7s-.031-2.17.977-2.487c.995-.312 2.277 1.83 2.585 2.296.347.525.795.694.795.694h3.415s1.025.074 1.199-.272c.162-.321-.132-.97-.132-.97s-1.895-3.04-2.83-4.175c-.71-.861-.83-.984 0-2.09z" />
                 </svg>
               </a>
             </div>
@@ -744,14 +745,14 @@ export default function Home() {
 
       {/* Screen Protector Section */}
       <section className="max-w-7xl mx-auto px-6 mt-12 md:mt-20 lg:mt-24">
-        <div className="w-full bg-[#004aad] rounded-[32px] overflow-hidden shadow-xl text-white pt-8 px-6 pb-0 sm:pt-10 sm:px-10 lg:pt-12 lg:px-16 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-8 relative">
+        <div className="w-full bg-[#034788] rounded-[32px] overflow-hidden shadow-xl text-white pt-8 px-6 pb-0 sm:pt-10 sm:px-10 lg:pt-12 lg:px-16 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-8 relative">
           <div className="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
-          
+
           <div className="space-y-6 max-w-2xl relative z-10 pb-8 lg:pb-12 text-left w-full">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-center lg:text-left">
               İnnovativ örtüklü ekran qorunması
             </h2>
-            
+
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Star className="w-5 h-5 text-amber-400 fill-amber-400 shrink-0 mt-0.5" />
@@ -776,7 +777,7 @@ export default function Home() {
                 <span className="text-[13px] sm:text-sm md:text-base font-semibold">Film hər bir xüsusi model üçün hazırlandığı üçün istənilən smartfon üçün uyğundur</span>
               </li>
             </ul>
-            
+
             <div className="pt-2 text-center lg:text-left">
               <a
                 href="#apply"
@@ -786,12 +787,12 @@ export default function Home() {
               </a>
             </div>
           </div>
-          
+
           <div className="w-full lg:w-[35%] flex justify-center lg:justify-end items-end relative z-10 mt-4 lg:mt-0">
             <div className="w-full max-w-[280px] lg:max-w-[320px] aspect-[3/4] flex items-end justify-center">
-              <img 
-                src="/screen_protector.png" 
-                alt="İnnovativ örtüklü ekran qorunması" 
+              <img
+                src="/screen_protector.png"
+                alt="İnnovativ örtüklü ekran qorunması"
                 className="w-full h-auto object-contain block align-bottom"
               />
             </div>
@@ -822,6 +823,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer component */}
+      <Footer onSelectDevice={handleDeviceSelection} />
+
       {/* 8. Pricing Estimation Modal */}
       {showResult && selectedDevice && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
@@ -845,7 +849,7 @@ export default function Home() {
             <div className="p-8 space-y-6">
               <div className="flex justify-between items-center text-sm bg-slate-50 border border-slate-100 rounded-2xl p-4">
                 <span className="font-semibold text-slate-500 flex items-center gap-1.5">
-                  <MapPin className="w-4.5 h-4.5 text-blue-600" />
+                  <MapPin className="w-4.5 h-4.5 text-[#034788]" />
                   Xidmət nöqtəsi: {selectedCity}
                 </span>
                 <span className="text-xs bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full font-bold flex items-center gap-1">
@@ -870,7 +874,7 @@ export default function Home() {
                         <td className="px-6 py-4 text-[14px] font-bold text-slate-800">{priceItem.service}</td>
                         <td className="px-6 py-4 text-center text-xs text-slate-500 font-medium">{priceItem.time}</td>
                         <td className="px-6 py-4 text-center text-xs text-emerald-600 font-bold">{priceItem.warranty}</td>
-                        <td className="px-6 py-4 text-right text-[15px] font-black text-blue-600">{priceItem.price} AZN</td>
+                        <td className="px-6 py-4 text-right text-[15px] font-black text-[#034788]">{priceItem.price} AZN</td>
                       </tr>
                     ))}
                   </tbody>
