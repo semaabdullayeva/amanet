@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import MegaMenu from "@/components/MegaMenu";
 import Footer from "@/components/Footer";
 import {
@@ -26,106 +26,26 @@ import {
   Tv,
   Volume2,
   HardDrive,
-  Gamepad
+  Gamepad,
+  Map,
+  Calendar
 } from "lucide-react";
+import Link from "next/link";
+
+interface ServiceCenter {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  latitude: number;
+  longitude: number;
+  workingHours: string;
+  regionId: string;
+  files: any[];
+}
 
 // Mock Data structure for page calculator lookup
 const CITIES = ["Bakı", "Sumqayıt", "Gəncə", "Xırdalan", "Lənkəran", "Naxçıvan"];
-
-// Flat list of all devices for search suggest in the calculator
-const ALL_DEVICES = [
-  // iPhone
-  { name: "iPhone 17 Pro Max", category: "iPhone təmiri" },
-  { name: "iPhone 17 Pro", category: "iPhone təmiri" },
-  { name: "iPhone 17", category: "iPhone təmiri" },
-  { name: "iPhone Air", category: "iPhone təmiri" },
-  { name: "iPhone 17e", category: "iPhone təmiri" },
-  { name: "iPhone 16 Pro Max", category: "iPhone təmiri" },
-  { name: "iPhone 16 Pro", category: "iPhone təmiri" },
-  { name: "iPhone 16 Plus", category: "iPhone təmiri" },
-  { name: "iPhone 16", category: "iPhone təmiri" },
-  { name: "iPhone 16e", category: "iPhone təmiri" },
-  { name: "iPhone 15 Pro Max", category: "iPhone təmiri" },
-  { name: "iPhone 15 Pro", category: "iPhone təmiri" },
-  { name: "iPhone 15 Plus", category: "iPhone təmiri" },
-  { name: "iPhone 15", category: "iPhone təmiri" },
-  { name: "iPhone 14 Pro Max", category: "iPhone təmiri" },
-  { name: "iPhone 14 Pro", category: "iPhone təmiri" },
-  { name: "iPhone 14 Plus", category: "iPhone təmiri" },
-  { name: "iPhone 14", category: "iPhone təmiri" },
-  { name: "iPhone 13 Pro Max", category: "iPhone təmiri" },
-  { name: "iPhone 13 Pro", category: "iPhone təmiri" },
-  { name: "iPhone 13", category: "iPhone təmiri" },
-  { name: "iPhone 13 mini", category: "iPhone təmiri" },
-  { name: "iPhone 12 Pro Max", category: "iPhone təmiri" },
-
-  // iPad
-  { name: "iPad Air 5", category: "iPad təmiri" },
-  { name: "iPad Air 4", category: "iPad təmiri" },
-  { name: "iPad Air 3", category: "iPad təmiri" },
-  { name: "iPad Air 2", category: "iPad təmiri" },
-  { name: "iPad Air", category: "iPad təmiri" },
-  { name: "iPad mini 6", category: "iPad təmiri" },
-  { name: "iPad mini 5", category: "iPad təmiri" },
-  { name: "iPad mini 4", category: "iPad təmiri" },
-  { name: "iPad Pro 12.9", category: "iPad təmiri" },
-  { name: "iPad Pro 11", category: "iPad təmiri" },
-  { name: "iPad 10.2", category: "iPad təmiri" },
-
-  // Samsung
-  { name: "Galaxy A02", category: "Samsung təmiri" },
-  { name: "Galaxy A10", category: "Samsung təmiri" },
-  { name: "Galaxy A12 (2020)", category: "Samsung təmiri" },
-  { name: "Galaxy A20", category: "Samsung təmiri" },
-  { name: "Galaxy A21s", category: "Samsung təmiri" },
-  { name: "Galaxy A22", category: "Samsung təmiri" },
-  { name: "Galaxy A23", category: "Samsung təmiri" },
-  { name: "Galaxy A3 (2016)", category: "Samsung təmiri" },
-  { name: "Galaxy A3 (2017)", category: "Samsung təmiri" },
-  { name: "Galaxy A30", category: "Samsung təmiri" },
-  { name: "Galaxy A30s", category: "Samsung təmiri" },
-  { name: "Galaxy A31", category: "Samsung təmiri" },
-  { name: "Galaxy A32", category: "Samsung təmiri" },
-  { name: "Galaxy A33", category: "Samsung təmiri" },
-  { name: "Galaxy A40", category: "Samsung təmiri" },
-  { name: "Galaxy A41", category: "Samsung təmiri" },
-
-  // Xiaomi
-  { name: "Xiaomi 11 Lite NE", category: "Xiaomi təmiri" },
-  { name: "Xiaomi 11T", category: "Xiaomi təmiri" },
-  { name: "Xiaomi 11T Pro", category: "Xiaomi təmiri" },
-  { name: "Xiaomi 12", category: "Xiaomi təmiri" },
-  { name: "Xiaomi 12 Pro", category: "Xiaomi təmiri" },
-  { name: "Xiaomi 12X", category: "Xiaomi təmiri" },
-  { name: "Xiaomi 13", category: "Xiaomi təmiri" },
-  { name: "Xiaomi 13 Lite", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 10", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 10T", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 10T Pro", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 11 Lite", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 11 Lite 5G", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 11 Pro", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 11 Ultra", category: "Xiaomi təmiri" },
-  { name: "Xiaomi Mi 9 SE", category: "Xiaomi təmiri" },
-
-  // Honor (Honor)
-  { name: "Honor 10", category: "Honor Təmiri" },
-  { name: "Honor 10 Lite", category: "Honor Təmiri" },
-  { name: "Honor 10i", category: "Honor Təmiri" },
-  { name: "Honor 10x Lite", category: "Honor Təmiri" },
-  { name: "Honor 20", category: "Honor Təmiri" },
-  { name: "Honor 20 Lite", category: "Honor Təmiri" },
-  { name: "Honor 20 Pro", category: "Honor Təmiri" },
-  { name: "Honor 200", category: "Honor Təmiri" },
-  { name: "Honor 20i", category: "Honor Təmiri" },
-  { name: "Honor 20S", category: "Honor Təmiri" },
-  { name: "Honor 30", category: "Honor Təmiri" },
-  { name: "Honor 30 Pro", category: "Honor Təmiri" },
-  { name: "Honor 30 Pro Plus", category: "Honor Təmiri" },
-  { name: "Honor 30i", category: "Honor Təmiri" },
-  { name: "Honor 30S", category: "Honor Təmiri" },
-  { name: "Honor 50", category: "Honor Təmiri" }
-];
 
 // Brand grids specifically structured for Section 4 table layout
 const BRAND_GRIDS = [
@@ -253,6 +173,63 @@ export default function Home() {
   const [isDeviceDropdownOpen, setIsDeviceDropdownOpen] = useState<boolean>(false);
   const [isCityDropdownOpen, setIsCityDropdownOpen] = useState<boolean>(false);
 
+  // Device list state
+  const [devicesList, setDevicesList] = useState<{name: string, category: string}[]>([]);
+  const [centers, setCenters] = useState<ServiceCenter[]>([]);
+  const [loadingCenters, setLoadingCenters] = useState(true);
+
+  useEffect(() => {
+    const fetchDevices = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/DeviceModels`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) {
+             const getCategoryFromName = (name: string) => {
+                const lowerName = name.toLowerCase();
+                if (lowerName.includes('iphone') || lowerName.includes('ipad') || lowerName.includes('apple') || lowerName.includes('mac')) return 'Apple təmiri';
+                if (lowerName.includes('samsung') || lowerName.includes('galaxy')) return 'Samsung təmiri';
+                if (lowerName.includes('xiaomi') || lowerName.includes('redmi') || lowerName.includes('poco')) return 'Xiaomi təmiri';
+                if (lowerName.includes('honor')) return 'Honor təmiri';
+                if (lowerName.includes('lenovo') || lowerName.includes('thinkpad')) return 'Lenovo təmiri';
+                if (lowerName.includes('asus')) return 'ASUS təmiri';
+                if (lowerName.includes('huawei')) return 'Huawei təmiri';
+                if (lowerName.includes('sony')) return 'Sony təmiri';
+                return 'Cihaz təmiri';
+             };
+
+            const mappedDevices = json.data.map((device: any) => ({
+              name: device.name,
+              category: getCategoryFromName(device.name)
+            }));
+            setDevicesList(mappedDevices);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch devices:", error);
+      }
+    };
+    fetchDevices();
+
+    const fetchCenters = async () => {
+      try {
+        setLoadingCenters(true);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ServiceCenters`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) {
+            setCenters(json.data);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch service centers:", error);
+      } finally {
+        setLoadingCenters(false);
+      }
+    };
+    fetchCenters();
+  }, []);
+
   // Modal visibility
   const [showResult, setShowResult] = useState<boolean>(false);
 
@@ -266,7 +243,7 @@ export default function Home() {
     heroRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const filteredDevices = ALL_DEVICES.filter(device =>
+  const filteredDevices = devicesList.filter(device =>
     device.name.toLowerCase().includes(deviceSearch.toLowerCase())
   );
 
@@ -296,6 +273,23 @@ export default function Home() {
     { title: "Portativ dinamik təmiri", mockDevice: "JBL Charge 5", icon: <Volume2 className="w-12 h-12 text-slate-300 group-hover:text-blue-500 transition-colors" /> },
     { title: "Oyun konsolunun təmiri", mockDevice: "PlayStation 5", icon: <Gamepad className="w-12 h-12 text-slate-300 group-hover:text-blue-500 transition-colors" /> }
   ];
+
+  // Generate dynamic Yandex Map URL with placemarks
+  const mapUrl = React.useMemo(() => {
+    const baseUrl = "https://yandex.com/map-widget/v1/";
+    if (!centers || centers.length === 0) {
+      return `${baseUrl}?ll=49.867092%2C40.409262&z=11`;
+    }
+    
+    // Use first center as map center
+    const ll = `${centers[0].longitude}%2C${centers[0].latitude}`;
+    
+    // Construct placemarks parameter (pt)
+    // pm2blm1 generates a blue marker with "1" inside it.
+    const pt = centers.map((c, idx) => `${c.longitude},${c.latitude},pm2blm${idx + 1}`).join('~');
+    
+    return `${baseUrl}?ll=${ll}&z=11&pt=${pt}`;
+  }, [centers]);
 
   return (
     <div className="w-full bg-white min-h-screen">
@@ -478,7 +472,7 @@ export default function Home() {
             <div className="pt-2">
               <a
                 href="#apply"
-                className="bg-amber-500 text-white hover:bg-amber-400 font-black text-xs md:text-sm px-8 py-3 rounded-2xl shadow-lg hover:shadow-xl active:scale-98 transition inline-block uppercase tracking-wider"
+                className="bg-amber-500 text-white hover:bg-amber-400 font-bold text-xs md:text-sm px-8 py-3 rounded-2xl shadow-lg hover:shadow-xl active:scale-98 transition inline-block uppercase tracking-wider"
               >
                 Daha çox oxu
               </a>
@@ -499,7 +493,7 @@ export default function Home() {
           {/* Card 1: 707 services */}
           <div className="bg-slate-50 border rounded-3xl p-6 flex items-center justify-between transition-all group">
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-black text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">707</span>
+              <span className="text-3xl md:text-4xl font-bold text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">707</span>
               <span className="text-sm font-bold text-slate-500 block">Rusiyada xidmətlər</span>
             </div>
             <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-[#034788]">
@@ -510,7 +504,7 @@ export default function Home() {
           {/* Card 2: 2 Million+ annual repairs */}
           <div className="bg-slate-50 border rounded-3xl p-6 flex items-center justify-between transition-all group">
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-black text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">2 MİLYON +</span>
+              <span className="text-3xl md:text-4xl font-bold text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">2 MİLYON +</span>
               <span className="text-sm font-bold text-slate-500 block">İllik təmirlər</span>
             </div>
             <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-[#034788]">
@@ -521,7 +515,7 @@ export default function Home() {
           {/* Card 3: 180 Cities */}
           <div className="bg-slate-50 border rounded-3xl p-6 flex items-center justify-between transition-all group">
             <div className="space-y-1">
-              <span className="text-3xl md:text-4xl font-black text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">180</span>
+              <span className="text-3xl md:text-4xl font-bold text-[#034788] block group-hover:scale-105 transform origin-left transition duration-200">180</span>
               <span className="text-sm font-bold text-slate-500 block">Şəhərlər</span>
             </div>
             <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center text-[#034788]">
@@ -549,7 +543,7 @@ export default function Home() {
 
           {/* Card 5: Franchise */}
           <div className="bg-slate-50 border rounded-3xl p-6 flex flex-col justify-between transition-all group cursor-pointer">
-            <h4 className="text-lg font-black text-slate-800 leading-tight">amanet.az françayzinq</h4>
+            <h4 className="text-lg font-bold text-slate-800 leading-tight">amanet.az françayzinq</h4>
             <div className="flex items-center justify-between mt-4">
               <span className="text-xs font-bold text-[#034788] flex items-center gap-1 group-hover:text-blue-500">
                 Daha çox oxu <ChevronRight className="w-3.5 h-3.5" />
@@ -640,7 +634,7 @@ export default function Home() {
                 onClick={() => handleDeviceSelection(card.mockDevice)}
                 className="bg-white border border-[#d5dbe4] rounded-2xl p-4 flex flex-col justify-between items-start h-36 hover:shadow-lg hover:border-blue-100 transition-all group cursor-pointer"
               >
-                <span className="text-[12px] md:text-[13px] font-black text-slate-800 group-hover:text-[#034788] transition-colors flex items-center gap-0.5">
+                <span className="text-[12px] md:text-[13px] font-bold text-slate-800 group-hover:text-[#034788] transition-colors flex items-center gap-0.5">
                   {card.title} <ChevronRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 group-hover:translate-x-0.5 transition" />
                 </span>
                 <div className="self-end mt-2">
@@ -800,6 +794,115 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 6.5. Service Centers Map & List Section */}
+      <section className="max-w-7xl mx-auto px-6 mt-16 md:mt-24">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-8">
+          Xidmət Mərkəzlərimiz
+        </h2>
+        <div className="flex flex-col lg:flex-row w-full h-[500px] border border-[#d5dbe4] rounded-[32px] overflow-hidden shadow-sm bg-white">
+          {/* Left Side: Map */}
+          <div className="w-full lg:w-3/5 h-[350px] lg:h-full relative bg-slate-100 flex-shrink-0">
+            <iframe
+              src={mapUrl}
+              className="w-full h-full border-none"
+              allowFullScreen={true}
+            ></iframe>
+          </div>
+
+          {/* Right Side: List of Service Centers */}
+          <div className="w-full lg:w-2/5 h-[350px] lg:h-full flex flex-col bg-white border-t lg:border-t-0 lg:border-l border-[#d5dbe4]">
+            {/* Header */}
+            <div className="px-6 py-5 border-b border-[#d5dbe4] flex items-center justify-between shrink-0 bg-white z-10">
+              <h3 className="text-[15px] sm:text-[17px] font-semibold text-slate-800">
+                Göstərilir <span className="font-extrabold text-[#034788]">{centers.length}</span> xidmət mərkəzi
+              </h3>
+              <button className="bg-slate-100 hover:bg-slate-200 text-[#034788] font-bold text-xs px-4 py-2.5 rounded-xl transition-colors">
+                Hamısını göstər
+              </button>
+            </div>
+
+            {/* List */}
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 scrollbar-thin scrollbar-thumb-slate-300">
+              {loadingCenters ? (
+                [...Array(4)].map((_, i) => (
+                  <div key={i} className="border border-slate-200 rounded-[20px] p-4 flex gap-4 animate-pulse">
+                    <div className="w-20 h-20 bg-slate-200 rounded-xl shrink-0"></div>
+                    <div className="flex-1 space-y-2.5">
+                      <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+                      <div className="h-3 bg-slate-200 rounded w-full"></div>
+                      <div className="h-3 bg-slate-200 rounded w-1/2"></div>
+                    </div>
+                  </div>
+                ))
+              ) : centers.length === 0 ? (
+                <div className="text-center py-10 text-slate-500 font-medium">
+                  Heç bir xidmət mərkəzi tapılmadı.
+                </div>
+              ) : (
+                centers.map((center) => (
+                  <Link 
+                    href={`/filiallar/${center.id}`}
+                    key={center.id}
+                    className="group flex flex-col sm:flex-row gap-4 sm:gap-5 border border-[#d5dbe4] hover:border-blue-300 hover:shadow-md rounded-[24px] p-4 transition-all bg-white cursor-pointer block"
+                  >
+                    {/* Image */}
+                    <div className="w-full sm:w-24 h-32 sm:h-24 bg-slate-100 rounded-xl overflow-hidden shrink-0 relative">
+                      {center.files && center.files.length > 0 ? (
+                        <img 
+                          src={center.files[0].url || center.files[0]} 
+                          alt={center.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center text-slate-300">
+                          <Map className="w-8 h-8 mb-1" />
+                        </div>
+                      )}
+                      <div className="absolute bottom-2 right-2 bg-white rounded-full p-1 shadow-sm sm:hidden">
+                        <MapPin className="w-4 h-4 text-red-500 fill-red-500/20" />
+                      </div>
+                    </div>
+
+                    {/* Details */}
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-red-500 font-bold text-lg leading-none">M</span>
+                          <h4 className="font-extrabold text-[15px] sm:text-[16px] text-slate-900 leading-tight">
+                            {center.name}
+                          </h4>
+                          <Star className="w-4 h-4 text-[#034788] fill-[#034788] ml-1" />
+                        </div>
+                        <ChevronRight className="hidden sm:block w-5 h-5 text-slate-400 group-hover:text-[#034788] group-hover:translate-x-0.5 transition-all shrink-0" />
+                      </div>
+
+                      <p className="text-[13px] sm:text-[14px] text-slate-600 font-medium mt-1.5 line-clamp-2">
+                        {center.address}
+                      </p>
+
+                      <div className="mt-auto pt-3 space-y-1">
+                        <div className="flex items-center gap-1.5 text-[12px] sm:text-[13px] text-slate-500 font-semibold">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {center.workingHours}
+                        </div>
+                        <p className="text-[11px] sm:text-[12px] text-slate-400 font-medium pl-5">
+                          İstirahət günləri yoxdur
+                        </p>
+                        
+                        <div className="flex items-center gap-1.5 text-[#034788] font-extrabold text-[14px] sm:text-[15px] pt-1 mt-1 border-t border-slate-50">
+                          <Phone className="w-3.5 h-3.5" />
+                          {center.phone}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 7. Footer CTA card */}
       <section className="max-w-7xl mx-auto px-6 mt-16 md:mt-24 mb-16 md:mb-24">
         <div className="w-full bg-white border border-[#d5dbe4] rounded-[32px] p-8 md:py-10 md:px-16 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -835,7 +938,7 @@ export default function Home() {
             <div className="bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-6 text-white flex justify-between items-center">
               <div>
                 <span className="text-[11px] text-blue-200 font-bold uppercase tracking-wider">Təmir Qiymətləri</span>
-                <h3 className="text-2xl font-black tracking-tight">{selectedDevice}</h3>
+                <h3 className="text-2xl font-bold tracking-tight">{selectedDevice}</h3>
               </div>
               <button
                 onClick={() => setShowResult(false)}
@@ -874,7 +977,7 @@ export default function Home() {
                         <td className="px-6 py-4 text-[14px] font-bold text-slate-800">{priceItem.service}</td>
                         <td className="px-6 py-4 text-center text-xs text-slate-500 font-medium">{priceItem.time}</td>
                         <td className="px-6 py-4 text-center text-xs text-emerald-600 font-bold">{priceItem.warranty}</td>
-                        <td className="px-6 py-4 text-right text-[15px] font-black text-[#034788]">{priceItem.price} AZN</td>
+                        <td className="px-6 py-4 text-right text-[15px] font-bold text-[#034788]">{priceItem.price} AZN</td>
                       </tr>
                     ))}
                   </tbody>

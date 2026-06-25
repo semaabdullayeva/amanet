@@ -35,14 +35,14 @@ export default function Footer({ onSelectDevice }: FooterProps) {
       <div className="absolute top-0 left-1/4 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Main Columns Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8 pb-12 border-b border-slate-900">
-          
+
           {/* Column 1: Brand & About */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 cursor-pointer" onClick={handleScrollToTop}>
-              <span className="text-3xl font-black bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent tracking-wider">
+              <span className="text-3xl font-bold bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent tracking-wider">
                 amanet
               </span>
               <span className="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full font-bold">
