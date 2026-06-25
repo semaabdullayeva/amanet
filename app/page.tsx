@@ -181,7 +181,8 @@ export default function Home() {
   useEffect(() => {
     const fetchDevices = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/DeviceModels`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://amanet-api-jk1q.onrender.com";
+        const res = await fetch(`${apiUrl}/api/DeviceModels`);
         if (res.ok) {
           const json = await res.json();
           if (json.success && json.data) {
@@ -214,7 +215,8 @@ export default function Home() {
     const fetchCenters = async () => {
       try {
         setLoadingCenters(true);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ServiceCenters`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://amanet-api-jk1q.onrender.com";
+        const res = await fetch(`${apiUrl}/api/ServiceCenters`);
         if (res.ok) {
           const json = await res.json();
           if (json.success && json.data) {
