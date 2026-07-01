@@ -173,10 +173,61 @@ export default function Home() {
   const [isDeviceDropdownOpen, setIsDeviceDropdownOpen] = useState<boolean>(false);
   const [isCityDropdownOpen, setIsCityDropdownOpen] = useState<boolean>(false);
 
+  // Category and Device state for tabs
+  const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
+  const [activeCategoryId, setActiveCategoryId] = useState<string>("");
+  const [categoryDevices, setCategoryDevices] = useState<{id: string, name: string}[]>([]);
+  const [loadingCategoryDevices, setLoadingCategoryDevices] = useState<boolean>(false);
+
   // Device list state
   const [devicesList, setDevicesList] = useState<{name: string, category: string}[]>([]);
   const [centers, setCenters] = useState<ServiceCenter[]>([]);
   const [loadingCenters, setLoadingCenters] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://amanet-api-jk1q.onrender.com";
+        const res = await fetch(`${apiUrl}/api/DeviceCategories`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) {
+            setCategories(json.data);
+            if (json.data.length > 0) {
+              setActiveCategoryId(json.data[0].id);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (!activeCategoryId) return;
+    const fetchCategoryDevices = async () => {
+      try {
+        setLoadingCategoryDevices(true);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://amanet-api-jk1q.onrender.com";
+        const res = await fetch(`${apiUrl}/api/DeviceModels?dto.deviceCategoryId=${activeCategoryId}&pagination.size=100`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) {
+            setCategoryDevices(json.data);
+          } else {
+            setCategoryDevices([]);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch category devices:", error);
+      } finally {
+        setLoadingCategoryDevices(false);
+      }
+    };
+    fetchCategoryDevices();
+  }, [activeCategoryId]);
 
   useEffect(() => {
     const fetchDevices = async () => {
@@ -276,21 +327,18 @@ export default function Home() {
     { title: "Oyun konsolunun təmiri", mockDevice: "PlayStation 5", icon: <Gamepad className="w-12 h-12 text-slate-300 group-hover:text-blue-500 transition-colors" /> }
   ];
 
-  // Generate dynamic Yandex Map URL with placemarks
+  // Generate dynamic Google Map URL
   const mapUrl = React.useMemo(() => {
-    const baseUrl = "https://yandex.com/map-widget/v1/";
+    const baseUrl = "https://maps.google.com/maps";
     if (!centers || centers.length === 0) {
-      return `${baseUrl}?ll=49.867092%2C40.409262&z=11`;
+      return `${baseUrl}?q=40.409262,49.867092&z=11&output=embed`;
     }
     
     // Use first center as map center
-    const ll = `${centers[0].longitude}%2C${centers[0].latitude}`;
+    const lat = centers[0].latitude;
+    const lng = centers[0].longitude;
     
-    // Construct placemarks parameter (pt)
-    // pm2blm1 generates a blue marker with "1" inside it.
-    const pt = centers.map((c, idx) => `${c.longitude},${c.latitude},pm2blm${idx + 1}`).join('~');
-    
-    return `${baseUrl}?ll=${ll}&z=11&pt=${pt}`;
+    return `${baseUrl}?q=${lat},${lng}&z=11&output=embed`;
   }, [centers]);
 
   return (
@@ -300,7 +348,7 @@ export default function Home() {
       <MegaMenu onSelectDevice={handleDeviceSelection} />
 
       {/* 2. Hero Calculator Banner */}
-      <main ref={heroRef} className="w-full bg-[#034788] py-16 md:py-24 px-6 text-white relative overflow-hidden">
+      <main ref={heroRef} className="w-full bg-[#034788] py-6 md:py-12 px-6 text-white relative overflow-hidden">
         {/* Subtle grid pattern background overlay */}
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
 
@@ -350,6 +398,29 @@ export default function Home() {
 
               <div className="space-y-4">
 
+                {/* Categories NavTabs */}
+                {categories.length > 0 && (
+                  <div className="flex overflow-x-auto scrollbar-none border-b border-slate-200 mb-6">
+                    {categories.map((cat) => (
+                      <button
+                        key={cat.id}
+                        onClick={() => {
+                          setActiveCategoryId(cat.id);
+                          setSelectedDevice("");
+                          setIsDeviceDropdownOpen(true);
+                        }}
+                        className={`whitespace-nowrap px-4 py-3 text-sm font-semibold transition-all border-b-2 -mb-[1px] ${
+                          activeCategoryId === cat.id 
+                            ? "border-[#034788] text-[#034788]" 
+                            : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
+                        }`}
+                      >
+                        {cat.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 {/* Field 1: Device Selector */}
                 <div className="relative">
                   <label className="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-1.5 ml-1">Cihazınız</label>
@@ -373,17 +444,19 @@ export default function Home() {
                         <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                         <input
                           type="text"
-                          placeholder="Məs. iPhone 15, iPad Air..."
+                          placeholder="Cihaz axtar..."
                           value={deviceSearch}
                           onChange={(e) => setDeviceSearch(e.target.value)}
                           className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
                         />
                       </div>
                       <div className="max-h-56 overflow-y-auto space-y-0.5 scrollbar-thin">
-                        {filteredDevices.length > 0 ? (
-                          filteredDevices.map((device, idx) => (
+                        {loadingCategoryDevices ? (
+                          <div className="text-center text-xs text-slate-400 py-4 font-semibold">Yüklənir...</div>
+                        ) : categoryDevices.filter(d => d.name.toLowerCase().includes(deviceSearch.toLowerCase())).length > 0 ? (
+                          categoryDevices.filter(d => d.name.toLowerCase().includes(deviceSearch.toLowerCase())).map((device, idx) => (
                             <button
-                              key={idx}
+                              key={device.id || idx}
                               onClick={() => {
                                 setSelectedDevice(device.name);
                                 setIsDeviceDropdownOpen(false);
@@ -392,7 +465,6 @@ export default function Home() {
                               className="w-full text-left px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-[#034788] rounded-lg transition-colors flex justify-between items-center"
                             >
                               <span>{device.name}</span>
-                              <span className="text-[10px] text-slate-400 font-bold uppercase">{device.category.split(" ")[0]}</span>
                             </button>
                           ))
                         ) : (
@@ -851,7 +923,7 @@ export default function Home() {
                     <div className="w-full sm:w-24 h-32 sm:h-24 bg-slate-100 rounded-xl overflow-hidden shrink-0 relative">
                       {center.files && center.files.length > 0 ? (
                         <img 
-                          src={center.files[0].url || center.files[0]} 
+                          src={center.files[0].path || center.files[0].url || center.files[0]} 
                           alt={center.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />

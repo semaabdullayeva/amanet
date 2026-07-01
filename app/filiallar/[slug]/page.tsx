@@ -314,7 +314,7 @@ export default function FilialDetail() {
               {centerData?.files && centerData.files.length > 0 ? (
                 centerData.files.map((file, i) => (
                   <div key={i} className="w-20 h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl bg-slate-200 overflow-hidden shrink-0 border border-slate-100 shadow-sm">
-                    <img src={file.url} alt="Xidmət mərkəzi" className="w-full h-full object-cover" />
+                    <img src={file.path || file.url} alt="Xidmət mərkəzi" className="w-full h-full object-cover" />
                   </div>
                 ))
               ) : (
